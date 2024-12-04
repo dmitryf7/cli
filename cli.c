@@ -1,4 +1,4 @@
-# Copyright (c) Dmitrii Fedotov 2024
+// Copyright (c) Dmitrii Fedotov 2024
 #include <string.h>
 #include "cli.h"
 
