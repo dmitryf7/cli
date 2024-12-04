@@ -156,63 +156,8 @@ CLIret_e cli(pCLICtx_t pcictx)
         }
         else if(TAB == pcictx->ch) // Tab character
         {
-#ifdef CLI_TIP
-
-            if(NULL != pcictx->cmdlinecommands)
-            {
-                result = cli_tip(pcictx);
-
-                if(CLIRET_CONTINUE_TIPOK == result)
-                {
-                    int slen = strlen(pcictx->autocompletion);
-
-                    if((pcictx->bytesread + slen) < (CLI_CMDLINEMAX - 1))
-                    {
-                        strcat(pcictx->cmdline, pcictx->autocompletion);
-                        pcictx->bytesread += slen;
-                        pcictx->cb_cliwrite(pcictx->autocompletion, slen);
-                    }
-                    else
-                    {
-                        pcictx->cb_cliwrite(&pcictx->bel, 1);
-                        result = CLIRET_CONTINUE;
-                    }
-                }
-                else if(CLIRET_CONTINUE_TIPMANY == result)
-                {
-                    int slen = strlen(pcictx->autocompletion);
-
-                    if((pcictx->bytesread + slen) < (CLI_CMDLINEMAX - 1))
-                    {
-                        strcat(pcictx->cmdline, pcictx->autocompletion);
-                        pcictx->bytesread += slen;
-                    }
-                    else
-                    {
-                        pcictx->cb_cliwrite(&pcictx->bel, 1);
-                    }
-
-                    pcictx->printcmdpromptnewline = true;
-                    pcictx->printcmdprompt = true;
-                    pcictx->printcmdline = true;
-                    result = CLIRET_CONTINUE;
-                }
-                else
-                {
-                    pcictx->cb_cliwrite(&pcictx->bel, 1);
-                    result = CLIRET_CONTINUE;
-                }
-            }
-            else
-            {
-                pcictx->cb_cliwrite(&pcictx->bel, 1);
-                result = CLIRET_CONTINUE;
-            }
-
-#else
             pcictx->cb_cliwrite(&pcictx->bel, 1);
             result = CLIRET_CONTINUE;
-#endif
         }
         else
         {
